@@ -164,7 +164,7 @@ jobs:
       module_name: 'perceval-opnfv'
       module_repository: 'chaoss/grimoirelab-perceval-opnfv'
       module_directory: 'src/grimoirelab-perceval-opnfv'
-      dependencies: "${{ needs.grimoirelab-toolkit.outputs.package_version }} \
+      dependencies: "grimoirelab-toolkit@>=0.3.1-rc.2 \
       ${{ needs.grimoirelab-perceval.outputs.package_version }}"
     secrets:
       access_token: ${{ secrets.GRIMOIRELAB_BUILD_TOKEN }}

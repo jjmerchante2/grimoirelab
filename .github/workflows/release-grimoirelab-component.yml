@@ -105,7 +105,7 @@ jobs:
           dependencies="${{ inputs.dependencies }}"
           if [ ! -z "$dependencies" ]
           then
-            for i in $(seq 20)
+            for i in $(seq 5)
             do
               poetry add --lock --dry-run $dependencies && exit 0
               sleep 10
