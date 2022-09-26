@@ -1,0 +1,72 @@
+name: test wait
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: "package"
+        required: true
+        default: "aa"
+
+jobs:
+
+  grimoirelab:
+    name: Grimoirelab
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Set up Git config
+        run: |
+          git config --global user.email "jjmerchante@bitergia.io"
+          git config --global user.name "Jose Javier Merchante"
+
+      - name: Configure repository credentials
+        run: |
+          git remote set-url origin https://${{ secrets.GRIMOIRELAB_BUILD_TOKEN }}@github.com/jjmerchante2/grimoirelab.git
+
+      - name: Install poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo "PATH=$HOME/.poetry/bin:$PATH" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Install release-tools
+        #TODO: Change to the latest version once the new release is created
+        run: pip install git+https://github.com/Bitergia/release-tools.git#egg=release-tools
+
+      - id: semverup
+        name: Update version number
+        run: |
+          version=$(semverup --bump-version=patch)
+
+          echo $version
+          git add pyproject.toml grimoirelab/_version.py
+          echo "::set-output name=version::$version"
+
+      - id: notes-forced-version
+        name: Generate release notes for updated dependencies
+        run: |
+          version=${{ steps.semverup.outputs.version }}
+          module_name="aaa"
+          today=$(date -u "+%Y-%m-%d")
+          cat << EOF > releases/$version.md
+          ## $module_name $version - ($today)
+          * Update Poetry's package dependencies
+          EOF
+          version_notes="$(cat releases/$version.md)"
+          version_notes="${version_notes//$'\n'/'%0A'}"
+          echo "::set-output name=notes::$version_notes"
+
+      - id: publish
+        name: Publish new version.
+        if: steps.semverup.outcome == 'success'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GRIMOIRELAB_BUILD_TOKEN }}
+        run: |
+          publish ${{ steps.semverup.outputs.version }} "Jose Javier Merchante <jjmerchante@bitergia.io>" --push origin
