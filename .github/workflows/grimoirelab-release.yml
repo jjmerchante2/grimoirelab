@@ -361,35 +361,6 @@ jobs:
         #TODO: Change to the latest version once the new release is created
         run: pip install git+https://github.com/Bitergia/release-tools.git#egg=release-tools
 
-      - id: check-dependencies
-        name: Check if package dependencies exist
-        run: |
-          dependencies="${{ needs.grimoirelab-toolkit.outputs.package_version }} \
-          ${{ needs.grimoirelab-sortinghat.outputs.package_version }} \
-          ${{ needs.grimoirelab-elk.outputs.package_version }} \
-          ${{ needs.grimoirelab-kidash.outputs.package_version }} \
-          ${{ needs.grimoirelab-sigils.outputs.package_version }} \
-          ${{ needs.grimoirelab-perceval.outputs.package_version }} \
-          ${{ needs.grimoirelab-perceval-mozilla.outputs.package_version }} \
-          ${{ needs.grimoirelab-perceval-opnfv.outputs.package_version }} \
-          ${{ needs.grimoirelab-perceval-puppet.outputs.package_version }} \
-          ${{ needs.grimoirelab-perceval-weblate.outputs.package_version }} \
-          ${{ needs.grimoirelab-graal.outputs.package_version }} \
-          ${{ needs.grimoirelab-cereslib.outputs.package_version }} \
-          ${{ needs.grimoirelab-kingarthur.outputs.package_version }} \
-          ${{ needs.grimoirelab-sirmordred.outputs.package_version }}"
-          if [ ! -z "$dependencies" ]
-          then
-            timeout=5
-            for i in $(seq 5)
-            do
-              poetry add --lock --no-cache --dry-run $dependencies && exit 0
-              sleep $timeout
-              timeout=$(( timeout * 2 ))
-            done
-            exit 1
-          fi
-
       - id: semverup
         name: Update version number
         run: |
@@ -402,53 +373,15 @@ jobs:
           else
             rcArg=''
           fi
-          versionUpdated=$((
-          ${{ needs.grimoirelab-toolkit.outputs.changed_version }} |
-          ${{ needs.grimoirelab-perceval.outputs.changed_version }} |
-          ${{ needs.grimoirelab-perceval-mozilla.outputs.changed_version }} |
-          ${{ needs.grimoirelab-perceval-opnfv.outputs.changed_version }} |
-          ${{ needs.grimoirelab-perceval-puppet.outputs.changed_version }} |
-          ${{ needs.grimoirelab-perceval-weblate.outputs.changed_version }} |
-          ${{ needs.grimoirelab-kingarthur.outputs.changed_version }} |
-          ${{ needs.grimoirelab-elk.outputs.changed_version }} |
-          ${{ needs.grimoirelab-sortinghat.outputs.changed_version }} |
-          ${{ needs.grimoirelab-kidash.outputs.changed_version }} |
-          ${{ needs.grimoirelab-sigils.outputs.changed_version }} |
-          ${{ needs.grimoirelab-sirmordred.outputs.changed_version }} |
-          ${{ needs.grimoirelab-cereslib.outputs.changed_version }} |
-          ${{ needs.grimoirelab-graal.outputs.changed_version }}))
 
-          if [ $((versionUpdated & $BUMP_MAJOR )) -ne 0 ]
-          then
-            version=$(semverup --bump-version=major $rcArg)
-          elif [ $((versionUpdated & $BUMP_MINOR )) -ne 0 ]
-          then
-            version=$(semverup --bump-version=minor $rcArg)
-          else
-            version=$(semverup --bump-version=patch $rcArg)
-          fi
+          version=$(semverup --bump-version=minor $rcArg)
+
           echo $version
           git add pyproject.toml grimoirelab/_version.py
           echo "::set-output name=version::$version"
 
       - name: Update dependencies files
         run: |
-          poetry add --lock --allow-prereleases \
-              "${{ needs.grimoirelab-toolkit.outputs.package_version }}" \
-              "${{ needs.grimoirelab-kidash.outputs.package_version }}" \
-              "${{ needs.grimoirelab-sortinghat.outputs.package_version }}" \
-              "${{ needs.grimoirelab-cereslib.outputs.package_version }}" \
-              "${{ needs.grimoirelab-sigils.outputs.package_version }}" \
-              "${{ needs.grimoirelab-perceval.outputs.package_version }}" \
-              "${{ needs.grimoirelab-perceval-mozilla.outputs.package_version }}" \
-              "${{ needs.grimoirelab-perceval-opnfv.outputs.package_version }}" \
-              "${{ needs.grimoirelab-perceval-puppet.outputs.package_version }}" \
-              "${{ needs.grimoirelab-perceval-weblate.outputs.package_version }}" \
-              "${{ needs.grimoirelab-kingarthur.outputs.package_version }}" \
-              "${{ needs.grimoirelab-graal.outputs.package_version }}" \
-              "${{ needs.grimoirelab-elk.outputs.package_version }}" \
-              "${{ needs.grimoirelab-sirmordred.outputs.package_version }}"
-
           cat << EOF > requirements.txt
           grimoirelab==${{ steps.semverup.outputs.version }}
           grimoirelab-toolkit==${{ needs.grimoirelab-toolkit.outputs.version }}
@@ -514,6 +447,96 @@ jobs:
           EOF
 
           cat $release_file
+
+      - name: Generate NEWS from packages
+        if: inputs.release_candidate == 'false'
+        env:
+          notes-grimoirelab-toolkit: "${{ needs.grimoirelab-toolkit.outputs.notes}}"
+          notes-kidash: "${{ needs.grimoirelab-kidash.outputs.notes}}"
+          notes-sortinghat: "${{ needs.grimoirelab-sortinghat.outputs.notes}}"
+          notes-cereslib: "${{ needs.grimoirelab-cereslib.outputs.notes}}"
+          notes-sigils: "${{ needs.grimoirelab-sigils.outputs.notes}}"
+          notes-perceval: "${{ needs.grimoirelab-perceval.outputs.notes}}"
+          notes-perceval-mozilla: "${{ needs.grimoirelab-perceval-mozilla.outputs.notes}}"
+          notes-perceval-opnfv: "${{ needs.grimoirelab-perceval-opnfv.outputs.notes}}"
+          notes-perceval-puppet: "${{ needs.grimoirelab-perceval-puppet.outputs.notes}}"
+          notes-perceval-weblate: "${{ needs.grimoirelab-perceval-weblate.outputs.notes}}"
+          notes-kingarthur: "${{ needs.grimoirelab-kingarthur.outputs.notes}}"
+          notes-graal: "${{ needs.grimoirelab-graal.outputs.notes}}"
+          notes-grimoire-elk: "${{ needs.grimoirelab-elk.outputs.notes}}"
+          notes-sirmordred: "${{ needs.grimoirelab-sirmordred.outputs.notes}}"
+          version-grimoirelab-toolkit: "${{ needs.grimoirelab-toolkit.outputs.version }}"
+          version-kidash: "${{ needs.grimoirelab-kidash.outputs.version }}"
+          version-sortinghat: "${{ needs.grimoirelab-sortinghat.outputs.version }}"
+          version-cereslib: "${{ needs.grimoirelab-cereslib.outputs.version }}"
+          version-sigils: "${{ needs.grimoirelab-sigils.outputs.version }}"
+          version-perceval: "${{ needs.grimoirelab-perceval.outputs.version }}"
+          version-perceval-mozilla: "${{ needs.grimoirelab-perceval-mozilla.outputs.version }}"
+          version-perceval-opnfv: "${{ needs.grimoirelab-perceval-opnfv.outputs.version }}"
+          version-perceval-puppet: "${{ needs.grimoirelab-perceval-puppet.outputs.version }}"
+          version-perceval-weblate: "${{ needs.grimoirelab-perceval-weblate.outputs.version }}"
+          version-kingarthur: "${{ needs.grimoirelab-kingarthur.outputs.version }}"
+          version-graal: "${{ needs.grimoirelab-graal.outputs.version }}"
+          version-grimoire-elk: "${{ needs.grimoirelab-elk.outputs.version }}"
+          version-sirmordred: "${{ needs.grimoirelab-sirmordred.outputs.version }}"
+        run: |
+          version=${{ steps.semverup.outputs.version }}
+          news_file="NEWS"
+          old_news="NEWS_old"
+          new_notes="tmp_new_notes"
+          today=$(date -u "+%Y-%m-%d")
+          
+          packages=(
+          grimoirelab-toolkit                
+          kidash
+          sortinghat
+          cereslib
+          sigils
+          perceval
+          perceval-mozilla
+          perceval-opnfv
+          perceval-puppet
+          perceval-weblate
+          kingarthur
+          graal
+          grimoire-elk
+          sirmordred)
+          
+          mv $news_file $old_news
+          touch $news_file
+
+          echo "# Releases" >> $news_file
+          echo "" >> $news_file
+          echo "## GrimoireLab $version - ($today)" >> $news_file
+          echo "" >> $news_file
+          echo "**New components:**" >> $news_file
+          echo "" >> $news_file
+          for package_name in "${packages[@]}"
+          do
+              package_version_var="version-$package_name"
+              package_notes_var="notes-$package_name"
+              package_version="${!package_version_var}"
+              package_notes="${!package_notes_var}"
+              contents="$(echo "$package_notes" | tail -n +2)"
+              if [ ! -z "$contents" ]
+              then
+                  echo "* $package_name $package_version" >> $news_file
+          
+                  echo "### $package_name" >> $new_notes
+                  echo "$contents" >> $new_notes
+                  echo "" >> $new_notes
+              fi
+          done
+          
+          echo "" >> $news_file
+          echo "The following list describes the changes by component:" >> $news_file
+          echo "" >> $news_file
+          cat $new_notes >> $news_file
+          
+          cat $old_news | tail -n +2 >> $news_file
+          
+          rm $old_news $new_notes
+          git add $news_file 
 
       - id: current_time
         name: Store current time to get the release workflow
