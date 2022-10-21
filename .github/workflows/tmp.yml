@@ -1,0 +1,15 @@
+name: TMP
+on:
+  push:
+    tags:
+      - '*.*.*'
+      - '*.*.*-*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create a new release on the repository
+        uses: jjmerchante/grimoirelab-github-actions/release@action-version
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
