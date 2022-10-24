@@ -1,0 +1,15 @@
+#grimoirelab==0.6.0
+grimoirelab-toolkit==0.3.1
+perceval==0.20.1
+perceval-mozilla==0.3.3
+perceval-opnfv==0.2.3
+perceval-puppet==0.2.3
+perceval-weblate==0.2.3
+kingarthur==0.2.3
+git+https://github.com/jjmerchante/grimoirelab-elk@update-pandas#egg=grimoire-elk
+git+https://github.com/jjmerchante/grimoirelab-sirmordred@update-pandas#egg=sirmordred
+git+https://github.com/jjmerchante/grimoirelab-sortinghat@update-pandas#egg=sortinghat
+git+https://github.com/jjmerchante/grimoirelab-cereslib@update-pandas#egg=cereslib
+kidash==0.5.1
+grimoirelab-panels==0.1.1
+graal==0.4.0

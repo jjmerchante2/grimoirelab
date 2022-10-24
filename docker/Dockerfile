@@ -59,6 +59,8 @@ RUN chmod 444 ${DEPLOY_USER_DIR}/menu.yaml
 ADD stage ${DEPLOY_USER_DIR}/stage
 RUN chmod 755 ${DEPLOY_USER_DIR}/stage
 
+ADD requirements.txt ${CONF_DIR}/requirements.txt
+
 USER ${DEPLOY_USER}
 
 # Do the deployment for GRIMOIRELAB_RELEASE
@@ -66,8 +68,6 @@ USER ${DEPLOY_USER}
 WORKDIR ${DEPLOY_USER_DIR}
 
 RUN mkdir -p ${CONF_DIR} && \
-    git clone -b ${GRIMOIRELAB_RELEASE} --depth 1 https://github.com/grimoirelab/grimoirelab.git && \
-    cp grimoirelab/requirements.txt ${CONF_DIR}/requirements.txt && \
     echo ${GRIMOIRELAB_RELEASE} > ${DEPLOY_USER_DIR}/release && \
     echo "Installing and checking GrimoireLab Release"
 RUN sudo pip install -r ${CONF_DIR}/requirements.txt
