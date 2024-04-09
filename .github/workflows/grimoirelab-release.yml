@@ -51,7 +51,7 @@ jobs:
       release_candidate: ${{ needs.variables-job.outputs.release_candidate }}
       bump_major: ${{ needs.variables-job.outputs.bump_major }}
       module_name: 'grimoirelab-toolkit'
-      module_repository: 'chaoss/grimoirelab-toolkit'
+      module_repository: 'jjmerchante/grimoirelab-toolkit'
       module_directory: 'src/grimoirelab-toolkit'
       dependencies: ''
     secrets:
@@ -68,7 +68,7 @@ jobs:
       release_candidate: ${{ needs.variables-job.outputs.release_candidate }}
       bump_major: ${{ needs.variables-job.outputs.bump_major }}
       module_name: 'kidash'
-      module_repository: 'chaoss/grimoirelab-kidash'
+      module_repository: 'jjmerchante/grimoirelab-kidash'
       module_directory: 'src/grimoirelab-kidash'
       dependencies: ''
     secrets:
@@ -86,7 +86,7 @@ jobs:
       release_candidate: ${{ needs.variables-job.outputs.release_candidate }}
       bump_major: ${{ needs.variables-job.outputs.bump_major }}
       module_name: 'sortinghat'
-      module_repository: 'chaoss/grimoirelab-sortinghat'
+      module_repository: 'jjmerchante/grimoirelab-sortinghat'
       module_directory: 'src/grimoirelab-sortinghat'
       dependencies: '${{ needs.grimoirelab-toolkit.outputs.package_version }}'
     secrets:
@@ -104,7 +104,7 @@ jobs:
       release_candidate: ${{ needs.variables-job.outputs.release_candidate }}
       bump_major: ${{ needs.variables-job.outputs.bump_major }}
       module_name: 'cereslib'
-      module_repository: 'chaoss/grimoirelab-cereslib'
+      module_repository: 'jjmerchante/grimoirelab-cereslib'
       module_directory: 'src/grimoirelab-cereslib'
       dependencies: '${{ needs.grimoirelab-toolkit.outputs.package_version }}'
     secrets:
@@ -121,7 +121,7 @@ jobs:
       release_candidate: ${{ needs.variables-job.outputs.release_candidate }}
       bump_major: ${{ needs.variables-job.outputs.bump_major }}
       module_name: 'grimoirelab-panels'
-      module_repository: 'chaoss/grimoirelab-sigils'
+      module_repository: 'jjmerchante/grimoirelab-sigils'
       module_directory: 'src/grimoirelab-sigils'
       dependencies: ''
     secrets:
@@ -139,7 +139,7 @@ jobs:
       release_candidate: ${{ needs.variables-job.outputs.release_candidate }}
       bump_major: ${{ needs.variables-job.outputs.bump_major }}
       module_name: 'perceval'
-      module_repository: 'chaoss/grimoirelab-perceval'
+      module_repository: 'jjmerchante/grimoirelab-perceval'
       module_directory: 'src/grimoirelab-perceval'
       dependencies: "${{ needs.grimoirelab-toolkit.outputs.package_version }}"
     secrets:
@@ -158,7 +158,7 @@ jobs:
       release_candidate: ${{ needs.variables-job.outputs.release_candidate }}
       bump_major: ${{ needs.variables-job.outputs.bump_major }}
       module_name: 'perceval-mozilla'
-      module_repository: 'chaoss/grimoirelab-perceval-mozilla'
+      module_repository: 'jjmerchante/grimoirelab-perceval-mozilla'
       module_directory: 'src/grimoirelab-perceval-mozilla'
       dependencies: "${{ needs.grimoirelab-toolkit.outputs.package_version }} \
       ${{ needs.grimoirelab-perceval.outputs.package_version }}"
@@ -178,7 +178,7 @@ jobs:
       release_candidate: ${{ needs.variables-job.outputs.release_candidate }}
       bump_major: ${{ needs.variables-job.outputs.bump_major }}
       module_name: 'perceval-opnfv'
-      module_repository: 'chaoss/grimoirelab-perceval-opnfv'
+      module_repository: 'jjmerchante/grimoirelab-perceval-opnfv'
       module_directory: 'src/grimoirelab-perceval-opnfv'
       dependencies: "${{ needs.grimoirelab-toolkit.outputs.package_version }} \
       ${{ needs.grimoirelab-perceval.outputs.package_version }}"
@@ -198,7 +198,7 @@ jobs:
       release_candidate: ${{ needs.variables-job.outputs.release_candidate }}
       bump_major: ${{ needs.variables-job.outputs.bump_major }}
       module_name: 'perceval-puppet'
-      module_repository: 'chaoss/grimoirelab-perceval-puppet'
+      module_repository: 'jjmerchante/grimoirelab-perceval-puppet'
       module_directory: 'src/grimoirelab-perceval-puppet'
       dependencies: "${{ needs.grimoirelab-toolkit.outputs.package_version }} \
       ${{ needs.grimoirelab-perceval.outputs.package_version }}"
@@ -218,7 +218,7 @@ jobs:
       release_candidate: ${{ needs.variables-job.outputs.release_candidate }}
       bump_major: ${{ needs.variables-job.outputs.bump_major }}
       module_name: 'perceval-weblate'
-      module_repository: 'chaoss/grimoirelab-perceval-weblate'
+      module_repository: 'jjmerchante/grimoirelab-perceval-weblate'
       module_directory: 'src/grimoirelab-perceval-weblate'
       dependencies: "${{ needs.grimoirelab-toolkit.outputs.package_version }} \
       ${{ needs.grimoirelab-perceval.outputs.package_version }}"
@@ -238,7 +238,7 @@ jobs:
       release_candidate: ${{ needs.variables-job.outputs.release_candidate }}
       bump_major: ${{ needs.variables-job.outputs.bump_major }}
       module_name: 'graal'
-      module_repository: 'chaoss/grimoirelab-graal'
+      module_repository: 'jjmerchante/grimoirelab-graal'
       module_directory: 'src/grimoirelab-graal'
       dependencies: "${{ needs.grimoirelab-toolkit.outputs.package_version }} \
       ${{ needs.grimoirelab-perceval.outputs.package_version }}"
@@ -265,7 +265,7 @@ jobs:
       release_candidate: ${{ needs.variables-job.outputs.release_candidate }}
       bump_major: ${{ needs.variables-job.outputs.bump_major }}
       module_name: 'grimoire-elk'
-      module_repository: 'chaoss/grimoirelab-elk'
+      module_repository: 'jjmerchante/grimoirelab-elk'
       module_directory: 'src/grimoirelab-elk'
       dependencies: "${{ needs.grimoirelab-toolkit.outputs.package_version }} \
       ${{ needs.grimoirelab-cereslib.outputs.package_version }} \
@@ -302,7 +302,7 @@ jobs:
       release_candidate: ${{ needs.variables-job.outputs.release_candidate }}
       bump_major: ${{ needs.variables-job.outputs.bump_major }}
       module_name: 'sirmordred'
-      module_repository: 'chaoss/grimoirelab-sirmordred'
+      module_repository: 'jjmerchante/grimoirelab-sirmordred'
       module_directory: 'src/grimoirelab-sirmordred'
       dependencies: "${{ needs.grimoirelab-toolkit.outputs.package_version }} \
       ${{ needs.grimoirelab-sortinghat.outputs.package_version }} \
@@ -340,8 +340,6 @@ jobs:
       - grimoirelab-sirmordred
     steps:
       - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # 3.1.0
-        with:
-          token: '${{ secrets.GRIMOIRELAB_BUILD_TOKEN }}'
 
       - name: Set up Python 3.8
         uses: actions/setup-python@13ae5bb136fac2878aff31522b9efb785519f984 # v4.3.0
@@ -362,11 +360,6 @@ jobs:
       - name: Install release-tools
         #TODO: Change to the latest version once the new release is created
         run: pip install git+https://github.com/Bitergia/release-tools.git#egg=release-tools
-
-      - id: check-dependencies
-        name: Check if package dependencies exist
-        run: |
-          sleep 180
 
       - id: semverup
         name: Update version number
@@ -698,59 +691,3 @@ jobs:
           datetime=$(date +"%Y-%m-%dT%H:%M:%S%z")
           echo "datetime=$datetime" >> $GITHUB_OUTPUT
           echo $datetime
-
-      - id: publish
-        name: Publish new version.
-        if: steps.semverup.outcome == 'success'
-        run: |
-          if [ ${{ inputs.release_candidate }} == 'true' ]
-          then
-            publish ${{ steps.semverup.outputs.version }} "${{ inputs.git_name }} <${{ inputs.git_email }}>" --push origin --no-cleanup
-          else
-            publish ${{ steps.semverup.outputs.version }} "${{ inputs.git_name }} <${{ inputs.git_email }}>" --push origin
-          fi
-
-      - id: wait-for-release
-        name: Wait for release to finish.
-        if: steps.publish.outcome == 'success'
-        run: |
-          url="https://api.github.com/repos/chaoss/grimoirelab/actions/workflows/release.yml/runs?created=>${{ steps.current_time.outputs.datetime }}"
-          while true
-          do
-            workflows=$(curl -sS -H "Authorization: token ${{ secrets.GRIMOIRELAB_BUILD_TOKEN }}" $url)
-            if [ $(echo $workflows | jq '.total_count') -eq 0 ]
-            then
-              echo "Release workflow did not start"
-              sleep 60
-              continue
-            fi
-
-            release_conclusion=$(echo $workflows | jq '.workflow_runs[0].conclusion')
-            release_status=$(echo $workflows | jq '.workflow_runs[0].status')
-            if [ $release_status = \"completed\" -a $release_conclusion = \"success\" ]
-            then
-              echo "Release completed!";
-              break;
-            elif [ $release_status = \"completed\" -a $release_conclusion != \"success\" ]
-            then
-              echo "Release failed!";
-              exit 1;
-            else
-              echo $release_conclusion $release_status
-              echo "Waiting for release..."
-              sleep 60
-            fi
-          done
-
-      - id: rollback
-        name: Rollback last commits and remove tag
-        if: steps.wait-for-release.outcome == 'failure'
-        run: |
-          git reset --hard HEAD~1
-          git push -f origin master
-          git tag -d ${{ steps.semverup.outputs.version }}
-          git push --delete origin ${{ steps.semverup.outputs.version }}
-
-          # Force to fail
-          exit 1
-        working-directory: ${{ inputs.module_directory }}
