@@ -1,4 +1,4 @@
-name: GrimoireLab release
+name: GrimoireLab release 2
 
 on:
   workflow_dispatch:
