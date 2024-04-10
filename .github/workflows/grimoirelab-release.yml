@@ -460,46 +460,6 @@ jobs:
           git add pyproject.toml grimoirelab/_version.py
           echo "version=$version" >> $GITHUB_OUTPUT
 
-      - name: Update dependencies files
-        run: |
-          poetry add --lock --allow-prereleases \
-              "${{ needs.grimoirelab-toolkit.outputs.package_version }}" \
-              "${{ needs.grimoirelab-kidash.outputs.package_version }}" \
-              "${{ needs.grimoirelab-sortinghat.outputs.package_version }}" \
-              "${{ needs.grimoirelab-cereslib.outputs.package_version }}" \
-              "${{ needs.grimoirelab-sigils.outputs.package_version }}" \
-              "${{ needs.grimoirelab-perceval.outputs.package_version }}" \
-              "${{ needs.grimoirelab-perceval-mozilla.outputs.package_version }}" \
-              "${{ needs.grimoirelab-perceval-opnfv.outputs.package_version }}" \
-              "${{ needs.grimoirelab-perceval-puppet.outputs.package_version }}" \
-              "${{ needs.grimoirelab-perceval-weblate.outputs.package_version }}" \
-              "${{ needs.grimoirelab-graal.outputs.package_version }}" \
-              "${{ needs.grimoirelab-elk.outputs.package_version }}" \
-              "${{ needs.grimoirelab-sirmordred.outputs.package_version }}"
-          poetry update --lock
-
-          cat << EOF > requirements.txt
-          grimoirelab==${{ steps.semverup.outputs.version }}
-          grimoirelab-toolkit==${{ needs.grimoirelab-toolkit.outputs.version }}
-          perceval==${{ needs.grimoirelab-perceval.outputs.version }}
-          perceval-mozilla==${{ needs.grimoirelab-perceval-mozilla.outputs.version }}
-          perceval-opnfv==${{ needs.grimoirelab-perceval-opnfv.outputs.version }}
-          perceval-puppet==${{ needs.grimoirelab-perceval-puppet.outputs.version }}
-          perceval-weblate==${{ needs.grimoirelab-perceval-weblate.outputs.version }}
-          grimoire-elk==${{ needs.grimoirelab-elk.outputs.version }}
-          sortinghat==${{ needs.grimoirelab-sortinghat.outputs.version }}
-          kidash==${{ needs.grimoirelab-kidash.outputs.version }}
-          grimoirelab-panels==${{ needs.grimoirelab-sigils.outputs.version }}
-          sirmordred==${{ needs.grimoirelab-sirmordred.outputs.version }}
-          cereslib==${{ needs.grimoirelab-cereslib.outputs.version }}
-          graal==${{ needs.grimoirelab-graal.outputs.version }}
-          EOF
-
-          cat requirements.txt
-
-          git add pyproject.toml
-          git add poetry.lock
-          git add requirements.txt
 
       - name: Use custom release notes if exists
         id: custom_notes
@@ -534,6 +494,8 @@ jobs:
             echo "Using packages release notes"
             echo "custom_notes=false" >> $GITHUB_OUTPUT
           fi
+          
+          cat $release_file
 
       - name: Generate release notes from packages
         if: steps.custom_notes.outputs.custom_notes == 'false'
