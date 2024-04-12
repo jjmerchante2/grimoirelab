@@ -40,9 +40,10 @@
             "technology": [
                 "Language",
                 "Specification",
-                "Something new"
+                "Something new",
+                "New technology"
             ],
-            "newfield": "blabla"
+            "newfield": "blabla2"
         }
     }
 }
