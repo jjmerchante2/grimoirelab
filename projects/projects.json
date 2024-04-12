@@ -1,0 +1,48 @@
+{
+    "Agile UML": {
+        "git": [
+            "https://github.com/eclipse/agileuml.git"
+        ],
+        "github2:issue": [
+            "https://github.com/eclipse/agileuml"
+        ],
+        "github2:pull": [
+            "https://github.com/eclipse/agileuml"
+        ],
+        "github:issue": [
+            "https://github.com/eclipse/agileuml"
+        ],
+        "github:pull": [
+            "https://github.com/eclipse/agileuml"
+        ],
+        "github:repo": [
+            "https://github.com/eclipse/agileuml"
+        ],
+        "meta": {
+            "pj_id": "modeling.agileuml",
+            "workinggroup": [
+                "Agile UML"
+            ]
+        }
+    },
+    "AsciiDoc Language": {
+        "git": [
+            "https://gitlab.com/cauldronio/cauldron-worker.git"
+        ],
+        "gitlab:issue": [
+            "https://gitlab.com/cauldronio/cauldron-worker"
+        ],
+        "gitlab:merge": [
+            "https://gitlab.com/cauldronio/cauldron-worker"
+        ],
+        "meta": {
+            "pj_id": "asciidoc.asciidoc-lang-2",
+            "technology": [
+                "Language",
+                "Specification",
+                "Something new"
+            ],
+            "newfield": "blabla"
+        }
+    }
+}
