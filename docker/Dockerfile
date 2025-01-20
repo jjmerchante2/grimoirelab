@@ -61,14 +61,16 @@ ENV \
     UWSGI_PROFILE_OVERRIDE=ssl=false;xml=false;routing=false
 
 WORKDIR ${DEPLOY_USER_DIR}
-RUN git clone -b 2.x --depth 1 https://github.com/chaoss/grimoirelab.git
+RUN git clone -b master --depth 1 https://github.com/jjmerchante2/grimoirelab.git
+ADD ./docker/grimoirelab_core-0.0.1rc2-py3-none-any.whl ${DEPLOY_USER_DIR}/grimoirelab
 
 WORKDIR ${DEPLOY_USER_DIR}/grimoirelab
 
 USER root
 RUN python -m venv /opt/venv/ && \
     . /opt/venv/bin/activate && \
-    poetry install
+    poetry install && \
+    pip install --force-reinstall grimoirelab_core-0.0.1rc2-py3-none-any.whl
 RUN chown -R $DEPLOY_USER:$DEPLOY_USER /opt/venv
 
 COPY ./docker/entrypoint.sh /usr/local/bin/
