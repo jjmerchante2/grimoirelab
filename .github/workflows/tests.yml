@@ -38,4 +38,4 @@ jobs:
         poetry install --with tests -vvv
     - name: Tests
       run: |
-        cd tests && poetry run pytest
+        cd tests && poetry run pytest -s

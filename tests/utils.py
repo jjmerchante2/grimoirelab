@@ -110,10 +110,12 @@ class GrimoireLabClient:
                 response.raise_for_status()
                 return response
             except requests.HTTPError as e:
+                print("ERROR", e.response.status_code, self._refresh_token)
                 if e.response.status_code == 403 and self._refresh_token:
                     self._refresh_auth_token()
                 return e.response
             except (requests.ConnectionError, requests.Timeout) as e:
+                print("ERROR", "reconnect")
                 self._reconnect()
                 last_exception = e
 
@@ -133,5 +135,6 @@ class GrimoireLabClient:
         data = response.json()
 
         self._token = data.get("access")
+        print("ERROR REFRESH!!!!!", data)
 
         self.session.headers.update({"Authorization": f"Bearer {self._token}"})
